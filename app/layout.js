@@ -4,7 +4,8 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Footer from "@/components/Footer/Footer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Provider from "@/Provider/Provider";
+import Context from "@/context/Context";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,13 +19,25 @@ const queryClient = new QueryClient();
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Provider>
-        <body className={`${inter.className}`}>
-          <Navbar></Navbar>
-          <div className="min-h-screen ">{children}</div>
-          <Footer></Footer>
-        </body>
-      </Provider>
+      <Context>
+        <QueryClientProvider client={queryClient}>
+          <Toaster
+            toastOptions={{
+              className: "",
+              style: {
+                border: "1px solid #ddd",
+                padding: "8px",
+                color: "#333",
+              },
+            }}
+          />
+          <body className={`${inter.className}`}>
+            <Navbar></Navbar>
+            <div className="min-h-screen ">{children}</div>
+            <Footer></Footer>
+          </body>
+        </QueryClientProvider>
+      </Context>
     </html>
   );
 }

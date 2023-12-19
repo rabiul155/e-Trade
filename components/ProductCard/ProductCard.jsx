@@ -1,30 +1,33 @@
 import { FaStar, FaCartArrowDown, FaRegEye, FaRegHeart } from "react-icons/fa";
 
 import styles from "./ProductCard.module.css";
-import { useRouter } from "next/navigation";
+
+import Link from "next/link";
+import toast from "react-hot-toast";
+import APIKit from "@/common/helpers/APIKit";
 
 function ProductCard({ product }) {
   const { _id, img, name, price, ratingsCount } = product;
 
-  const router = useRouter();
+  const addToCart = (payload) => {
+    console.log(payload);
+    const onSuccess = (data) => {
+      console.log(data);
+    };
+    const onFailure = (error) => {
+      console.log(error);
+    };
 
-  const viewDetails = () => {
-    localStorage.setItem("product", JSON.stringify(product));
-    router.push(`/products/${_id}`);
-  };
-
-  const cartProduct = [];
-
-  const addToCart = () => {
-    const oldCart = JSON.parse(localStorage.getItem("cart"));
-    window.alert("cart product done");
-    if (!oldCart) {
-      const initialCart = [product];
-      localStorage.setItem("cart", JSON.stringify(initialCart));
-    } else {
-      const newCart = [...oldCart, product];
-      localStorage.setItem("cart", JSON.stringify(newCart));
-    }
+    const promise = APIKit.cart
+      .addToCart(payload)
+      .then(onSuccess)
+      .catch(onFailure)
+      .finally();
+    return toast.promise(promise, {
+      loading: "Loading...",
+      success: "Product added successfully!",
+      error: "Something went wrong...",
+    });
   };
 
   return (
@@ -34,19 +37,14 @@ function ProductCard({ product }) {
           <img src={img} className="rounded-t mx-auto"></img>
           <table className={styles.tableContent}>
             <tbody>
-              <tr
-                className=" border
-                         border-collapse flex   bg-white "
-              >
-                <td
-                  onClick={viewDetails}
-                  className="h-9 w-11 border
-                         border-collapse hover:bg-gray-900 hover:text-white duration-300 flex items-center justify-center"
-                >
-                  <FaRegEye></FaRegEye>
+              <tr className="border border-collapse flex bg-white ">
+                <td className="h-9 w-11 border border-collapse hover:bg-gray-900 hover:text-white duration-300 flex items-center justify-center">
+                  <Link href={`/products/${_id}`}>
+                    <FaRegEye></FaRegEye>
+                  </Link>
                 </td>
                 <td
-                  onClick={addToCart}
+                  onClick={() => addToCart(product)}
                   className="h-9 w-11 border
                          border-collapse hover:bg-gray-900 hover:text-white duration-300 flex items-center justify-center"
                 >

@@ -1,20 +1,33 @@
 "use client";
-import { useEffect, useState } from "react";
+import APIKit from "@/common/helpers/APIKit";
+import Loading from "@/components/Loading/Loading";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "next/navigation";
 import { FaStar, FaRegHeart } from "react-icons/fa";
 
 function page() {
-  const [product, setProduct] = useState({});
+  const params = useParams();
 
-  useEffect(() => {
-    const product = JSON.parse(localStorage.getItem("product"));
-    if (product) {
-      setProduct(product);
-    }
-  }, []);
+  const {
+    data: product = {},
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["product/_id"],
+    queryFn: async () => {
+      const result = await APIKit.product.getSingleProduct(params.productId);
+      return result.data;
+    },
+  });
 
-  console.log(product);
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
+  if (isError) {
+    return <div>data fetching error</div>;
+  }
 
-  const { id, img, name, price, category, shipping, stock, ratingsCount } =
+  const { _id, img, name, price, category, shipping, stock, ratingsCount } =
     product;
 
   return (
