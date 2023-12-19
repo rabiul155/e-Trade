@@ -7,6 +7,7 @@ const APIKit = {
   },
 
   cart: {
+    getCartProducts: (params = {}) => client.get("/cart", params),
     addToCart: (payload) => client.post("/cart", payload),
   },
 };
