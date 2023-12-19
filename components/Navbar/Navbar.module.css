@@ -1,0 +1,27 @@
+.mainNav {
+    background: #f6f7fb;
+    position: relative;
+    z-index: 100;
+}
+
+.phoneNav {
+    background: rgb(237, 246, 251);
+    position: absolute;
+    height: 200px;
+    width: 230px;
+    top: -200px;
+    left: 0;
+    color: rgb(24, 23, 23);
+    border-radius: 0px 0px 5px 0px;
+    font-weight: 600;
+    font-size: 18px;
+    padding: 0px 10px;
+    transition: all linear .4s;
+    z-index: 50;
+}
+
+.phoneDisplay {
+
+    top: 70px;
+
+}
