@@ -1,47 +1,61 @@
 "use client";
+import APIKit from "@/common/helpers/APIKit";
 import Button from "@/components/Button/Button";
 import InputField from "@/components/InputField/InputField";
 import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 import * as Yup from "yup";
 
 const formSchema = Yup.object({
   name: Yup.string().min(2).required("please enter your name"),
   email: Yup.string().email().required("please enter your email"),
-  division : Yup.string().required("select one"),
-  district : Yup.string().required("select one"),
-  file: Yup.string().required("please enter your photo"),
+  division: Yup.string().required("select one"),
+  district: Yup.string().required("select one"),
+  // file: Yup.string().required("please enter your photo"),
   password: Yup.string()
     .required("please enter your password")
     .min(6, "password should be at least 6 character"),
 });
+const initialValues = {
+  name: "",
+  email: "",
+  division: "",
+  district: "",
+  password: "",
+};
 
 function page() {
+  const router = useRouter();
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
+    useFormik({
+      initialValues,
+      validationSchema: formSchema,
 
-  const {
-    values,
-    errors,
-    touched,
-    handleChange,
-    handleBlur,
-    setFieldValue,
-    handleSubmit,
-  } = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      division : "",
-      district : "",
-      file: "",
-      password: "",
-    },
+      onSubmit: (values, action) => {
+        const payload = values;
+        const onSuccess = (result) => {
+          console.log(result);
+          action.resetForm();
+          router.push("/login");
+        };
+        const onError = (error) => {
+          console.log(error);
+        };
 
-    validationSchema: formSchema,
-    onSubmit: (values, action) => {
-      console.log(values);
-      action.resetForm();
-    },
-  });
+        const promise = APIKit.auth
+          .register(payload)
+          .then(onSuccess)
+          .catch(onError)
+          .finally();
+        return toast.promise(promise, {
+          loading: "Loading...",
+          success: "Registered successfully",
+          error: "Something went wrong",
+        });
+      },
+    });
 
   const divisionDistricts = {
     Barishal: [
@@ -120,7 +134,6 @@ function page() {
       "Thakurgaon",
     ],
   };
- 
 
   return (
     <div className="bg-white w-full md:max-w-md mx-auto px-4 my-4 lg:px-10">
@@ -180,8 +193,8 @@ function page() {
               <option value="Sylhet">Sylhet</option>
             </select>
             {errors.district && touched.district ? (
-            <p className=" text-sm text-red-600">{errors.district}</p>
-          ) : null}
+              <p className=" text-sm text-red-600">{errors.district}</p>
+            ) : null}
           </div>
 
           <div>
@@ -192,7 +205,7 @@ function page() {
               onBlur={handleBlur}
               value={values.district}
               className="w-full px-4 py-3 text-[14px] rounded-lg bg-gray-200 mt-1 border focus:border-blue-500 focus:bg-white focus:outline-none"
-                         >          
+            >
               <option disabled selected>
                 Select District
               </option>
@@ -201,12 +214,12 @@ function page() {
               ))}
             </select>
             {errors.district && touched.district ? (
-            <p className=" text-sm text-red-600">{errors.district}</p>
-          ) : null}
+              <p className=" text-sm text-red-600">{errors.district}</p>
+            ) : null}
           </div>
         </div>
 
-        <div className="relative mt-4">
+        {/* <div className="relative mt-4">
           <label className="block text-gray-700">Photo</label>
           <input
             type="file"
@@ -221,7 +234,7 @@ function page() {
           {errors.file && touched.file ? (
             <p className=" text-sm text-red-600">{errors.file}</p>
           ) : null}
-        </div>
+        </div> */}
 
         <div className="mt-4">
           <InputField

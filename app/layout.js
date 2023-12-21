@@ -20,25 +20,25 @@ const queryClient = new QueryClient();
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Context>
-        <QueryClientProvider client={queryClient}>
-          <Toaster
-            toastOptions={{
-              className: "",
-              style: {
-                border: "1px solid #ddd",
-                padding: "8px",
-                color: "#333",
-              },
-            }}
-          />
-          <body className={`${inter.className}`}>
+      <body className={`${inter.className}`}>
+        <Context>
+          <QueryClientProvider client={queryClient}>
+            <Toaster
+              toastOptions={{
+                className: "",
+                style: {
+                  border: "1px solid #ddd",
+                  padding: "8px",
+                  color: "#333",
+                },
+              }}
+            />
             <Navbar></Navbar>
-            <div className="min-h-screen ">{children}</div>
+            <div className="min-h-screen">{children}</div>
             <Footer></Footer>
-          </body>
-        </QueryClientProvider>
-      </Context>
+          </QueryClientProvider>
+        </Context>
+      </body>
     </html>
   );
 }

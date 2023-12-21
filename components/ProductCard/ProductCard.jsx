@@ -9,8 +9,12 @@ import APIKit from "@/common/helpers/APIKit";
 function ProductCard({ product }) {
   const { _id, img, name, price, ratingsCount } = product;
 
-  const addToCart = (payload) => {
-    console.log(payload);
+  const addToCart = (product) => {
+    const payload = {
+      customer: "demo",
+      quantity: 1,
+      product: product,
+    };
     const onSuccess = (data) => {
       console.log(data);
     };

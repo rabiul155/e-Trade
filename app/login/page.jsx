@@ -1,8 +1,12 @@
 "use client";
+import APIKit from "@/common/helpers/APIKit";
+import { setTokenAndRedirect } from "@/common/helpers/HTTPKit";
 import Button from "@/components/Button/Button";
 import InputField from "@/components/InputField/InputField";
 import { useFormik } from "formik";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import * as Yup from "yup";
 
 const formSchema = Yup.object({
@@ -13,6 +17,7 @@ const formSchema = Yup.object({
 });
 
 function page() {
+  const router = useRouter();
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
       initialValues: {
@@ -20,13 +25,34 @@ function page() {
         password: "",
       },
       validationSchema: formSchema,
+
       onSubmit: (values, action) => {
-        console.log(values);
-        action.resetForm();
+        const payload = values;
+        const onSuccess = (response) => {
+          console.log(response.data.accessToken);
+          const token = response.data.accessToken;
+          setTokenAndRedirect(token, () => {
+            router.push("/");
+          });
+          console.log(token);
+          action.resetForm();
+        };
+        const onError = (error) => {
+          console.log(error);
+        };
+
+        const promise = APIKit.auth.login(payload);
+
+        toast
+          .promise(promise, {
+            loading: "Loading...",
+            success: "Login successfully",
+            error: "Login failed",
+          })
+          .then(onSuccess)
+          .catch(onError);
       },
     });
-
-  console.log(errors);
 
   return (
     <div

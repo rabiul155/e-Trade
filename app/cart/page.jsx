@@ -3,10 +3,12 @@ import APIKit from "@/common/helpers/APIKit";
 import Loading from "@/components/Loading/Loading";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaStar } from "react-icons/fa";
 
 const Cart = () => {
   const {
+    refetch,
     data: products = [],
     isLoading,
     isError,
@@ -14,7 +16,6 @@ const Cart = () => {
     queryKey: ["/cart"],
     queryFn: async () => {
       const result = await APIKit.cart.getCartProducts();
-      console.log(result);
       return result.data;
     },
   });
@@ -27,15 +28,34 @@ const Cart = () => {
     return <div>fetching error</div>;
   }
 
-  //   const handleDelete = (id) => {
-  //     const confirm = window.confirm("Are you sure to delete this product ");
-  //     if (confirm) {
-  //       const remainingProduct = products.filter((product) => product.id !== id);
-  //       localStorage.setItem("cart", JSON.stringify(remainingProduct));
-  //       setProducts(remainingProduct);
-  //     } else {
-  //     }
-  //   };
+  const handleDelete = (_id) => {
+    const confirm = window.confirm("Are you sure to delete this product ");
+    if (confirm) {
+      const onSuccess = (data) => {
+        if (data.data) {
+          console.log(data.data);
+          refetch();
+        }
+      };
+
+      const onError = (data) => {
+        console.log(data);
+      };
+      const promise = APIKit.cart
+        .deleteFromCart(_id)
+        .then(onSuccess)
+        .catch(onError)
+        .finally();
+
+      toast.promise(promise, {
+        loading: "Loading...",
+        success: "Successfully deleted",
+        error: "Something went wrong",
+      });
+    } else {
+      return;
+    }
+  };
 
   if (products?.length === 0) {
     return (
@@ -55,18 +75,18 @@ const Cart = () => {
               className=" bg-[#f9f9fa]"
               height={100}
               width={80}
-              src={product?.img}
+              src={product?.product?.img}
             ></img>
             <div>
-              <p>{product?.name}</p>
-              <small>Price : {product.price}</small>
+              <p>{product?.product?.name}</p>
+              <small>Price : {product?.product?.price}</small>
               <div className=" flex gap-1 mt-2">
                 <FaStar className=" text-yellow-400" size={12}></FaStar>
                 <FaStar className=" text-yellow-400" size={12}></FaStar>
                 <FaStar className=" text-yellow-400" size={12}></FaStar>
                 <FaStar className=" text-yellow-400" size={12}></FaStar>
                 <small className=" text-gray-500 -mt-[2px]  mx-1">
-                  {product.ratingsCount}
+                  {product?.product?.ratingsCount}
                 </small>
               </div>
             </div>
@@ -74,7 +94,7 @@ const Cart = () => {
           <div className="  ">
             <button
               className="text-white rounded px-2 py-1 bg-gray-800"
-              //   onClick={() => handleDelete(product.id)}
+              onClick={() => handleDelete(product?._id)}
             >
               Delete
             </button>
