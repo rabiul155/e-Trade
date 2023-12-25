@@ -38,11 +38,9 @@ export default function RootLayout({ children }) {
                   },
                 }}
               />
-              <AuthGuardHOC>
-                <Navbar></Navbar>
-                <div className="min-h-screen">{children}</div>
-                <Footer></Footer>
-              </AuthGuardHOC>
+              <Navbar></Navbar>
+              <div className="min-h-screen">{children}</div>
+              <Footer></Footer>
             </QueryClientProvider>
           </Provider>
         </Context>

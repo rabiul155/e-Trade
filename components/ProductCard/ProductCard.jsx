@@ -43,7 +43,7 @@ function ProductCard({ product }) {
             <tbody>
               <tr className="border border-collapse flex bg-white ">
                 <td className="h-9 w-11 border border-collapse hover:bg-gray-900 hover:text-white duration-300 flex items-center justify-center">
-                  <Link href={`/products/${_id}`}>
+                  <Link href={`me/products/${_id}`}>
                     <FaRegEye></FaRegEye>
                   </Link>
                 </td>

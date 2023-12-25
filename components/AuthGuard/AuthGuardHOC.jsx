@@ -17,7 +17,7 @@ function AuthGuardHOC({ children }) {
 
   const auth = useSelector((state) => state.auth);
   console.log(auth);
-  const { isLoading, isError, isSuccess } = auth;
+  const { loading, isError, isSuccess } = auth;
 
   const dispatch = useDispatch();
 
@@ -26,16 +26,16 @@ function AuthGuardHOC({ children }) {
   const getUserInfo = () => {
     payload = {
       isSuccess: false,
-      isLoading: true,
+      loading: true,
       isError: false,
       authError: "",
       user: {},
     };
-    // dispatch(setUser(payload));
+    dispatch(setUser(payload));
     const onSuccess = (response) => {
       payload = {
         isSuccess: true,
-        isLoading: false,
+        loading: false,
         isError: false,
         authError: "",
         user: response.data,
@@ -46,7 +46,7 @@ function AuthGuardHOC({ children }) {
     const onError = (error) => {
       payload = {
         isSuccess: false,
-        isLoading: false,
+        loading: false,
         isError: true,
         authError: error.message,
         user: {},
@@ -77,14 +77,14 @@ function AuthGuardHOC({ children }) {
     }
   }, []);
 
-  useEffect(() => {
-    if (isLoading) {
-      return <Loading></Loading>;
-    }
-    if (isError) {
-      router.push("/login");
-    }
-  }, [isError, isLoading]);
+  // useEffect(() => {
+  //   if (loading) {
+  //     return <Loading></Loading>;
+  //   }
+  //   if (isError) {
+  //     router.push("/login");
+  //   }
+  // }, [isError, loading]);
 
   return authentication ? children : null;
 }

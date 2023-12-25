@@ -8,9 +8,19 @@ import styles from "./Navbar.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { dashboardContext } from "@/context/Context";
+import { useDispatch, useSelector } from "react-redux";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/common/helpers/KeyChain";
+import { useRouter } from "next/navigation";
+import { setUser } from "@/redux/authSlice/authSlice";
 
 function Navbar() {
   const { toggle, setToggle } = useContext(dashboardContext);
+  const router = useRouter();
+
+  const auth = useSelector((state) => state.auth);
+  const { user } = auth;
+
+  const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
 
@@ -20,7 +30,7 @@ function Navbar() {
         <Link
           onClick={() => setOpen(false)}
           className="hover:bg-[#333333] font-semibold hover:text-white  px-4 py-2 rounded-2xl duration-150"
-          href="/products"
+          href="/me/products"
         >
           Products
         </Link>
@@ -29,7 +39,7 @@ function Navbar() {
         <Link
           onClick={() => setOpen(false)}
           className="hover:bg-[#333333] font-semibold hover:text-white  px-4 py-2 rounded-2xl duration-150"
-          href="/cart"
+          href="/me/cart"
         >
           Cart
         </Link>
@@ -38,7 +48,7 @@ function Navbar() {
         <Link
           onClick={() => setOpen(false)}
           className="hover:bg-[#333333] font-semibold hover:text-white px-4 py-2 rounded-2xl duration-150"
-          href="/help"
+          href="/me/help"
         >
           Help
         </Link>
@@ -54,6 +64,21 @@ function Navbar() {
       </li>
     </>
   );
+
+  const handleLogOut = () => {
+    localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(REFRESH_TOKEN);
+    const payload = {
+      isSuccess: false,
+      loading: true,
+      isError: false,
+      authError: "",
+      user: {},
+    };
+    dispatch(setUser(payload));
+
+    router.push("/login");
+  };
 
   return (
     <div className=" ">
@@ -79,17 +104,28 @@ function Navbar() {
             </ul>
           </div>
           <div className="flex items-center">
-            <Link href="/login">
-              <button className="lg:mr-5  text-[16px] font-semibold hover:bg-[#333333] hover:text-white  px-4 py-2 rounded-2xl duration-150">
-                LogIn
+            {user.email ? (
+              <button
+                onClick={handleLogOut}
+                className="lg:mr-5  text-[16px] font-semibold hover:bg-[#333333] hover:text-white  px-4 py-2 rounded-2xl duration-150"
+              >
+                LogOut
               </button>
-            </Link>
+            ) : (
+              <>
+                <Link href="/login">
+                  <button className="lg:mr-5  text-[16px] font-semibold hover:bg-[#333333] hover:text-white  px-4 py-2 rounded-2xl duration-150">
+                    LogIn
+                  </button>
+                </Link>
 
-            <Link className=" hidden lg:block" href="/signup">
-              <button className=" bg-white text-black rounded-2xl lg:px-3 px-2 py-1 font-semibold duration-150">
-                SignUp
-              </button>
-            </Link>
+                <Link className=" hidden lg:block" href="/signup">
+                  <button className=" bg-white text-black rounded-2xl lg:px-3 px-2 py-1 font-semibold duration-150">
+                    SignUp
+                  </button>
+                </Link>
+              </>
+            )}
 
             <button
               onClick={() => setOpen(!open)}
@@ -111,8 +147,9 @@ function Navbar() {
         </div>
       </div>
       <div
-        className={`lg:hidden ${styles.phoneNav} ${open ? styles.phoneDisplay : ""
-          }`}
+        className={`lg:hidden ${styles.phoneNav} ${
+          open ? styles.phoneDisplay : ""
+        }`}
       >
         <ul className=" pt-2">{menuItems}</ul>
       </div>

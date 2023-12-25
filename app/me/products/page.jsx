@@ -3,9 +3,9 @@ import { FaStar } from "react-icons/fa";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import p1 from "../../public/Images/p1.jpg";
-import p2 from "../../public/Images/p2.jpg";
-import p3 from "../../public/Images/p3.jpg";
+import p1 from "../../../public/Images/p1.jpg";
+import p2 from "../../../public/Images/p2.jpg";
+import p3 from "../../../public/Images/p3.jpg";
 import Loading from "@/components/Loading/Loading";
 import APIKit from "@/common/helpers/APIKit";
 
