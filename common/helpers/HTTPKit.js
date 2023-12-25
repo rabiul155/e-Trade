@@ -1,5 +1,6 @@
 import axios from "axios";
 import APIKit from "./APIKit";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "./KeyChain";
 
 const client = axios.create({
   baseURL: "http://localhost:5000/",
@@ -23,17 +24,22 @@ const setClientToken = (token) => {
   return promise;
 };
 
-export const setTokenAndRedirect = (token, redirect = () => {}) => {
+export const setTokenAndRedirect = (
+  accessToken,
+  refreshToken,
+  redirect = () => {}
+) => {
   const onSuccess = (client) => {
     let token = client.defaults.headers.common["Authorization"];
     token = token.replace("Bearer ", "");
-    localStorage.setItem("token", token);
+    localStorage.setItem(ACCESS_TOKEN, token);
+    localStorage.setItem(REFRESH_TOKEN, refreshToken);
     redirect();
   };
   const onError = (error) => {
     console.log(error);
   };
-  return setClientToken(token).then(onSuccess).catch(onError);
+  return setClientToken(accessToken).then(onSuccess).catch(onError);
 };
 
 export const HTTPKit = {

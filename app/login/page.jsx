@@ -29,12 +29,13 @@ function page() {
       onSubmit: (values, action) => {
         const payload = values;
         const onSuccess = (response) => {
-          console.log(response.data.accessToken);
-          const token = response.data.accessToken;
-          setTokenAndRedirect(token, () => {
+          const accessToken = response.data.accessToken;
+          const refreshToken = response.data.refreshToken;
+
+          setTokenAndRedirect(accessToken, refreshToken, () => {
             router.push("/");
           });
-          console.log(token);
+
           action.resetForm();
         };
         const onError = (error) => {

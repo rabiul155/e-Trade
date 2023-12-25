@@ -19,7 +19,7 @@ function page() {
     queryKey: ["products"],
     queryFn: async () => {
       const data = await APIKit.product.getProductsList();
-      console.log(data.data);
+
       return data.data;
     },
   });

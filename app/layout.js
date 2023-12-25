@@ -7,6 +7,9 @@ import Footer from "@/components/Footer/Footer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Context from "@/context/Context";
 import { Toaster } from "react-hot-toast";
+import AuthGuardHOC from "@/components/AuthGuard/AuthGuardHOC";
+import { Provider } from "react-redux";
+import store from "@/redux/store/store";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,23 +23,28 @@ const queryClient = new QueryClient();
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <title>eTrade</title>
       <body className={`${inter.className}`}>
         <Context>
-          <QueryClientProvider client={queryClient}>
-            <Toaster
-              toastOptions={{
-                className: "",
-                style: {
-                  border: "1px solid #ddd",
-                  padding: "8px",
-                  color: "#333",
-                },
-              }}
-            />
-            <Navbar></Navbar>
-            <div className="min-h-screen">{children}</div>
-            <Footer></Footer>
-          </QueryClientProvider>
+          <Provider store={store}>
+            <QueryClientProvider client={queryClient}>
+              <Toaster
+                toastOptions={{
+                  className: "",
+                  style: {
+                    border: "1px solid #ddd",
+                    padding: "8px",
+                    color: "#333",
+                  },
+                }}
+              />
+              <AuthGuardHOC>
+                <Navbar></Navbar>
+                <div className="min-h-screen">{children}</div>
+                <Footer></Footer>
+              </AuthGuardHOC>
+            </QueryClientProvider>
+          </Provider>
         </Context>
       </body>
     </html>
