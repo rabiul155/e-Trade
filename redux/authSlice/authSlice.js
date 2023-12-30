@@ -10,9 +10,13 @@ const initialState = {
 };
 
 export const getUser = createAsyncThunk("auth/getUser", async () => {
-  const result = await APIKit.getUserInfo();
-  console.log("api slice", result.data);
-  return result.data;
+  try {
+    const result = await APIKit.getUserInfo();
+    console.log("api slice", result.data);
+    return result.data;
+  } catch (error) {
+    throw error;
+  }
 });
 
 const authSlice = createSlice({
@@ -24,6 +28,7 @@ const authSlice = createSlice({
       state.isError = action.payload.isError;
       state.isSuccess = action.payload.isSuccess;
       state.loading = action.payload.loading;
+      state.authError = action.payload.authError;
     },
   },
   extraReducers: (builder) => {
@@ -45,7 +50,7 @@ const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.user = {};
-        state.authError = action.error;
+        state.authError = action.error.message;
       });
   },
 });

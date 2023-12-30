@@ -8,22 +8,31 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../Loading/Loading";
+import { setShow } from "@/redux/modalSlice/modalSlice";
+import Modal from "../modal/Modal";
 
 function AuthGuardHOC({ children }) {
   const [authentication, setAuthentication] = useState(false);
 
-  const router = useRouter();
-  // const pathname = usePathname();
-
   const auth = useSelector((state) => state.auth);
-  console.log(auth);
   const { loading, isError, isSuccess } = auth;
-
+  const modal = useSelector((state) => state.modal);
+  const router = useRouter();
   const dispatch = useDispatch();
 
-  let payload;
+  const setShowModal = (payload) => {
+    dispatch(setShow(payload));
+  };
+
+  const sessionExpiredModal = (
+    <Modal show={modal.show} setShow={setShowModal}>
+      <p>session expired reload </p>
+    </Modal>
+  );
 
   const getUserInfo = () => {
+    let payload;
+
     payload = {
       isSuccess: false,
       loading: true,
@@ -40,7 +49,7 @@ function AuthGuardHOC({ children }) {
         authError: "",
         user: response.data,
       };
-
+      setAuthentication(true);
       dispatch(setUser(payload));
     };
     const onError = (error) => {
@@ -51,9 +60,10 @@ function AuthGuardHOC({ children }) {
         authError: error.message,
         user: {},
       };
-      dispatch(setUser(payload));
       console.log(error);
-      router.push("/login");
+      dispatch(setUser(payload));
+      dispatch(setShow(true));
+      // router.push("/login");
     };
     return APIKit.getUserInfo().then(onSuccess).catch(onError);
   };
@@ -65,9 +75,8 @@ function AuthGuardHOC({ children }) {
 
     if (accessToken && refreshToken) {
       setTokenAndRedirect(accessToken, refreshToken)
-        // .then(getUserInfo)
-        .then(dispatch(getUser()))
-        .then(setAuthentication(true))
+        .then(getUserInfo)
+        // .then(() => dispatch(getUser()))
         .catch((error) => {
           console.log(error);
           router.push("/login");
@@ -77,16 +86,11 @@ function AuthGuardHOC({ children }) {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (loading) {
-  //     return <Loading></Loading>;
-  //   }
-  //   if (isError) {
-  //     router.push("/login");
-  //   }
-  // }, [isError, loading]);
+  if (loading) {
+    return <Loading></Loading>;
+  }
 
-  return authentication ? children : null;
+  return authentication ? children : sessionExpiredModal;
 }
 
 export default AuthGuardHOC;

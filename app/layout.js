@@ -7,7 +7,6 @@ import Footer from "@/components/Footer/Footer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Context from "@/context/Context";
 import { Toaster } from "react-hot-toast";
-import AuthGuardHOC from "@/components/AuthGuard/AuthGuardHOC";
 import { Provider } from "react-redux";
 import store from "@/redux/store/store";
 

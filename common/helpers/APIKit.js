@@ -2,7 +2,12 @@ import client, { HTTPKit } from "./HTTPKit";
 
 const APIKit = {
   setClientToken: HTTPKit.setClientToken,
+
+  refreshToken: (refreshToken) =>
+    client.post("/refreshToken", { refreshToken }),
+
   getUserInfo: (params = {}) => client.get("/getUserInfo", params),
+
   auth: {
     register: (payload) => client.post("/register", payload),
     login: (payload) => client.post("/token", payload),
