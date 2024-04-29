@@ -81,7 +81,7 @@ function Navbar() {
   };
 
   return (
-    <div className=" ">
+    <div className=" -z-10">
       <div className={`${styles.mainNav}`}>
         <div className="  flex justify-between items-center px-2 lg:px-4 text-gray-800 h-[70px]">
           <div className="flex items-center">

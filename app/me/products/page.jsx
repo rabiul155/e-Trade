@@ -29,8 +29,8 @@ function page() {
   if (error) return "An error has occurred: " + error.message;
 
   return (
-    <div className="flex flex-col-reverse lg:flex-row gap-2 p-6">
-      <div className="shrink-0 md:w-80 w-full text-gray-800 md:pr-4 md:h-screen md:overflow-x-hidden md:overflow-y-scroll">
+    <div className=" flex flex-col-reverse lg:flex-row gap-2 p-6">
+      <aside className="shrink-0 md:w-72 w-full text-gray-800 md:pr-4 md:h-[82vh] md:overflow-x-hidden md:overflow-y-scroll">
         <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1">
           <h3 className="mb-6 font-semibold text-gray-800 text-xl">Category</h3>
           <ul>
@@ -169,7 +169,7 @@ function page() {
             </div>
           </div>
         </div>
-      </div>
+      </aside>
       <div className="">
         <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products?.map((product) => (

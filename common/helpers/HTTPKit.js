@@ -11,8 +11,8 @@ const defaultError = {
 };
 
 const client = axios.create({
-  baseURL: "http://localhost:5000/",
-  timeout: 80000,
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  timeout: 9000,
 });
 
 client.interceptors.response.use(
