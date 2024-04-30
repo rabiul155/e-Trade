@@ -40,18 +40,21 @@ function page() {
         };
         const onError = (error) => {
           console.log(error);
+          throw error;
         };
 
-        const promise = APIKit.auth.login(payload);
-
-        toast
-          .promise(promise, {
-            loading: "Loading...",
-            success: "Login successfully",
-            error: "Login failed",
-          })
+        const promise = APIKit.auth
+          .login(payload)
           .then(onSuccess)
           .catch(onError);
+
+        console.log(promise);
+
+        toast.promise(promise, {
+          loading: "Loading...",
+          success: "Login successfully",
+          error: "Login failed",
+        });
       },
     });
 
