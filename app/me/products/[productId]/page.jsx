@@ -16,7 +16,7 @@ function page() {
     queryKey: ["product/_id"],
     queryFn: async () => {
       const result = await APIKit.product.getSingleProduct(params.productId);
-      return result.data;
+      return result.data.data.product;
     },
   });
 

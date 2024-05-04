@@ -28,6 +28,7 @@ function page() {
 
       onSubmit: (values, action) => {
         const payload = values;
+
         const onSuccess = (response) => {
           const accessToken = response.data.accessToken;
           const refreshToken = response.data.refreshToken;
@@ -35,7 +36,6 @@ function page() {
           setTokenAndRedirect(accessToken, refreshToken, () => {
             router.push("/");
           });
-
           action.resetForm();
         };
         const onError = (error) => {

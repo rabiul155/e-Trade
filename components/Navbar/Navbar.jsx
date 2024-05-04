@@ -104,7 +104,7 @@ function Navbar() {
             </ul>
           </div>
           <div className="flex items-center">
-            {user.email ? (
+            {user?.email ? (
               <button
                 onClick={handleLogOut}
                 className="lg:mr-5  text-[16px] font-semibold hover:bg-[#333333] hover:text-white  px-4 py-2 rounded-2xl duration-150"

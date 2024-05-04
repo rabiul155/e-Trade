@@ -1,4 +1,5 @@
 "use client";
+
 import { FaStar } from "react-icons/fa";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import { useQuery } from "@tanstack/react-query";
@@ -8,8 +9,13 @@ import p2 from "../../../public/Images/p2.jpg";
 import p3 from "../../../public/Images/p3.jpg";
 import Loading from "@/components/Loading/Loading";
 import APIKit from "@/common/helpers/APIKit";
+import toast from "react-hot-toast";
+
+import { useSelector } from "react-redux";
 
 function page() {
+  const auth = useSelector((state) => state.auth);
+  const { user } = auth;
   const {
     isLoading,
     error,
@@ -18,11 +24,38 @@ function page() {
   } = useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const data = await APIKit.product.getProductsList();
+      const response = await APIKit.product.getProductsList();
 
-      return data.data;
+      return response.data.data.products;
     },
   });
+
+  const addToCart = (product) => {
+    console.log(product);
+    const payload = {
+      customer: user.name,
+      email: user.email,
+      product: product,
+    };
+    const onSuccess = (data) => {
+      console.log(data);
+    };
+    const onFailure = (error) => {
+      console.log(error);
+      throw error;
+    };
+
+    const promise = APIKit.cart
+      .addToCart(payload)
+      .then(onSuccess)
+      .catch(onFailure)
+      .finally();
+    return toast.promise(promise, {
+      loading: "Loading...",
+      success: "Product added successfully!",
+      error: "Something went wrong...",
+    });
+  };
 
   if (isLoading) return <Loading></Loading>;
 
@@ -173,7 +206,11 @@ function page() {
       <div className="">
         <div className=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {products?.map((product) => (
-            <ProductCard key={product._id} product={product}></ProductCard>
+            <ProductCard
+              key={product._id}
+              product={product}
+              addToCart={addToCart}
+            ></ProductCard>
           ))}
         </div>
       </div>

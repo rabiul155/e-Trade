@@ -3,8 +3,8 @@
 import APIKit from "@/common/helpers/APIKit";
 import { setTokenAndRedirect } from "@/common/helpers/HTTPKit";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/common/helpers/KeyChain";
-import { getUser, setUser } from "@/redux/authSlice/authSlice";
-import { usePathname, useRouter } from "next/navigation";
+import { setUser } from "@/redux/authSlice/authSlice";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../Loading/Loading";
@@ -42,12 +42,13 @@ function AuthGuardHOC({ children }) {
     };
     dispatch(setUser(payload));
     const onSuccess = (response) => {
+      console.log(response.data);
       payload = {
         isSuccess: true,
         loading: false,
         isError: false,
         authError: "",
-        user: response.data,
+        user: response.data.data.user,
       };
       setAuthentication(true);
       dispatch(setUser(payload));

@@ -4,24 +4,24 @@ const APIKit = {
   setClientToken: HTTPKit.setClientToken,
 
   refreshToken: (refreshToken) =>
-    client.post("/refreshToken", { refreshToken }),
+    client.post("/users/refreshToken", { refreshToken }),
 
-  getUserInfo: (params = {}) => client.get("/getUserInfo", params),
+  getUserInfo: (params = {}) => client.get("/users", params),
 
   auth: {
-    register: (payload) => client.post("/register", payload),
-    login: (payload) => client.post("/token", payload),
+    register: (payload) => client.post("/users/register", payload),
+    login: (payload) => client.post("/users/login", payload),
   },
 
   product: {
-    getProductsList: () => client.get("products"),
-    getSingleProduct: (_id) => client.get(`/product/${_id}`),
+    getProductsList: () => client.get("/products"),
+    getSingleProduct: (_id) => client.get(`/products/${_id}`),
   },
 
   cart: {
-    getCartProducts: (params = {}) => client.get("/cart", params),
-    addToCart: (payload) => client.post("/cart", payload),
-    deleteFromCart: (_id) => client.delete(`/cartDelete/${_id}`),
+    getCartProducts: (params = {}) => client.get("/carts", params),
+    addToCart: (payload) => client.post("/carts", payload),
+    deleteFromCart: (_id) => client.delete(`/carts/${_id}`),
   },
 };
 

@@ -16,7 +16,7 @@ const Cart = () => {
     queryKey: ["/cart"],
     queryFn: async () => {
       const result = await APIKit.cart.getCartProducts();
-      return result.data;
+      return result.data.data.carts;
     },
   });
 

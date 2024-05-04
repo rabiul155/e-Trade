@@ -3,36 +3,9 @@ import { FaStar, FaCartArrowDown, FaRegEye, FaRegHeart } from "react-icons/fa";
 import styles from "./ProductCard.module.css";
 
 import Link from "next/link";
-import toast from "react-hot-toast";
-import APIKit from "@/common/helpers/APIKit";
 
-function ProductCard({ product }) {
+function ProductCard({ product, addToCart }) {
   const { _id, img, name, price, ratingsCount } = product;
-
-  const addToCart = (product) => {
-    const payload = {
-      customer: "demo",
-      quantity: 1,
-      product: product,
-    };
-    const onSuccess = (data) => {
-      console.log(data);
-    };
-    const onFailure = (error) => {
-      console.log(error);
-    };
-
-    const promise = APIKit.cart
-      .addToCart(payload)
-      .then(onSuccess)
-      .catch(onFailure)
-      .finally();
-    return toast.promise(promise, {
-      loading: "Loading...",
-      success: "Product added successfully!",
-      error: "Something went wrong...",
-    });
-  };
 
   return (
     <div className={styles.mainContent}>
