@@ -1,21 +1,26 @@
 "use client";
+
 import APIKit from "@/common/helpers/APIKit";
 import Loading from "@/components/Loading/Loading";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+
 import toast from "react-hot-toast";
 import { FaStar } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const Cart = () => {
+  const auth = useSelector((state) => state.auth);
+  const { user } = auth;
+
   const {
     refetch,
     data: products = [],
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["/cart"],
+    queryKey: ["/carts"],
     queryFn: async () => {
-      const result = await APIKit.cart.getCartProducts();
+      const result = await APIKit.cart.getCartProducts(user.email);
       return result.data.data.carts;
     },
   });
@@ -37,7 +42,6 @@ const Cart = () => {
           refetch();
         }
       };
-
       const onError = (data) => {
         console.log(data);
       };
@@ -60,7 +64,6 @@ const Cart = () => {
   if (products?.length === 0) {
     return (
       <div className="text-lg font-semibold mt-6 text-center">
-        {" "}
         You do not buy any product yet
       </div>
     );
@@ -69,7 +72,7 @@ const Cart = () => {
   return (
     <div className="grid grid-cols-1 w-4/5 gap-4 m-4">
       {products?.map((product) => (
-        <div className="flex justify-between items-center">
+        <div key={product._id} className="flex justify-between items-center">
           <div className="my-4 flex justify-start gap-3">
             <img
               className=" bg-[#f9f9fa]"

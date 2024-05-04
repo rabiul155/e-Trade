@@ -19,7 +19,7 @@ const APIKit = {
   },
 
   cart: {
-    getCartProducts: (params = {}) => client.get("/carts", params),
+    getCartProducts: (email) => client.get(`/carts?email=${email}`),
     addToCart: (payload) => client.post("/carts", payload),
     deleteFromCart: (_id) => client.delete(`/carts/${_id}`),
   },

@@ -18,7 +18,7 @@ const client = axios.create({
 client.interceptors.response.use(
   (response) => response,
   function (error) {
-    console.log(error.response);
+    console.log({ apiError: error });
     if (
       error.response.status === 401 &&
       error.response.data.message === "token_not_valid"
