@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
-function page() {
-    return (
-        <div>
-            this is summary
-        </div>
-    );
-};
+function SummaryPage() {
+  return <div>this is summary</div>;
+}
 
-export default page;
+export default SummaryPage;

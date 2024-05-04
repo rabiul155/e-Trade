@@ -1,39 +1,29 @@
 "use client";
 import { FaStar } from "react-icons/fa";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/Loading/Loading";
+import APIKit from "@/common/helpers/APIKit";
 
-function page() {
-  const [products1, products2] = useQueries({
-    queries: [
-      {
-        queryKey: ["products1"],
-        queryFn: async () => {
-          const res = await fetch(
-            "https://next-js-e-commerce-server.vercel.app/products"
-          );
-          const data = await res.json();
-          return data;
-        },
-      },
-      {
-        queryKey: ["products2"],
-        queryFn: async () => {
-          const res = await fetch("https://fakestoreapi.com/products");
-          const data = await res.json();
-          return data;
-        },
-      },
-    ],
+function MyProductPage() {
+  const {
+    data: products = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["/products"],
+    queryFn: async () => {
+      const result = await APIKit.product.getProductsList();
+      return result.data.data.products;
+    },
   });
 
-  if (products1.isLoading || products2.isLoading) return <Loading></Loading>;
-  if (products1.error)
-    return "An error has occurred: " + products1.error.message;
-  if (products1.error)
-    return "An error has occurred: " + products2.error.message;
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
+  if (isError) {
+    return "An error has occurred: ";
+  }
 
-  console.log(products1.data);
   return (
     <div className=" m-2 lg:m-0">
       <div className="hidden sm:block h-screen overflow-y-scroll">
@@ -73,8 +63,8 @@ function page() {
       </div>
 
       <div className="sm:hidden grid grid-cols-1 gap-4">
-        {products1.data?.map((product) => (
-          <div className="my-4 flex justify-start gap-3">
+        {products.map((product) => (
+          <div key={product._id} className="my-4 flex justify-start gap-3">
             <img
               className=" bg-[#f9f9fa]"
               height={100}
@@ -101,4 +91,4 @@ function page() {
   );
 }
 
-export default page;
+export default MyProductPage;

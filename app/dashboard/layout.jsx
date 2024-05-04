@@ -3,7 +3,7 @@ import { dashboardContext } from "@/context/Context";
 import Link from "next/link";
 import { useContext, useState } from "react";
 
-function layout({ children }) {
+function DashboardLayout({ children }) {
   const { toggle, setToggle } = useContext(dashboardContext);
 
   return (
@@ -61,4 +61,4 @@ function layout({ children }) {
   );
 }
 
-export default layout;
+export default DashboardLayout;

@@ -1,16 +1,11 @@
 import AddProduct from "@/components/AddProduct/AddProduct";
 
+function AddProductPage() {
+  return (
+    <div>
+      <AddProduct></AddProduct>
+    </div>
+  );
+}
 
-function page() {
-    return (
-
-        <div >
-            <AddProduct></AddProduct>
-
-        </div>
-
-
-    );
-};
-
-export default page;
+export default AddProductPage;
