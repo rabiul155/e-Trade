@@ -133,12 +133,12 @@ function Navbar() {
             >
               {open ? (
                 <RxCross2
-                  className="text-black font-bold lg:hidden block"
+                  className="text-gray-800 hover:text-white font-bold lg:hidden block"
                   size={25}
                 />
               ) : (
                 <HiMenu
-                  className="text-black font-bold lg:hidden block"
+                  className="text-gray-800 hover:text-white font-bold lg:hidden block"
                   size={25}
                 />
               )}

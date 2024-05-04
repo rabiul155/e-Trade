@@ -8,8 +8,8 @@ function DashboardLayout({ children }) {
 
   return (
     <div>
-      <div className="relative grid grid-cols-1 lg:grid-cols-[240px,1fr] ">
-        <div className="hidden lg:block ">
+      <div className="relative grid grid-cols-1 md:grid-cols-[240px,1fr] ">
+        <div className="hidden md:block ">
           <ul className=" min-h-screen p-2 bg-slate-200 ">
             <Link href="/dashboard/addProduct">
               {" "}
@@ -31,7 +31,7 @@ function DashboardLayout({ children }) {
         </div>
 
         <div
-          className={`absolute z-10 duration-500 block sm:hidden ${
+          className={`absolute z-10 duration-500 block md:hidden ${
             toggle ? "left-0" : "-left-60"
           }`}
         >

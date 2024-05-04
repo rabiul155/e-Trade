@@ -3,9 +3,11 @@ import { FaStar } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/Loading/Loading";
 import APIKit from "@/common/helpers/APIKit";
+import toast from "react-hot-toast";
 
 function MyProductPage() {
   const {
+    refetch,
     data: products = [],
     isLoading,
     isError,
@@ -23,6 +25,33 @@ function MyProductPage() {
   if (isError) {
     return "An error has occurred: ";
   }
+  const handleDelete = (id) => {
+    const confirm = window.confirm("Are you sure to delete this product ");
+    if (confirm) {
+      const onSuccess = (data) => {
+        if (data.data) {
+          console.log(data.data);
+          refetch();
+        }
+      };
+      const onError = (data) => {
+        console.log(data);
+      };
+      const promise = APIKit.product
+        .deleteProduct(id)
+        .then(onSuccess)
+        .catch(onError)
+        .finally();
+
+      toast.promise(promise, {
+        loading: "Loading...",
+        success: "Successfully deleted",
+        error: "Something went wrong",
+      });
+    } else {
+      return;
+    }
+  };
 
   return (
     <div className=" m-2 lg:m-0">
@@ -39,9 +68,9 @@ function MyProductPage() {
             </tr>
           </thead>
           <tbody>
-            {products1.data?.map((product) => (
+            {products.map((product) => (
               <tr
-                key={product.id}
+                key={product._id}
                 className="border-b  border-gray-300 bg-gray-100"
               >
                 <td className="p-3">
@@ -52,40 +81,17 @@ function MyProductPage() {
                 <td className="p-3">{product.ratings}</td>
                 <td className="p-3 ">{product.stock}</td>
                 <td className="p-3 ">
-                  <span className="px-3 py-1 font-semibold rounded-md dark:bg-violet-400 dark:text-gray-900">
+                  <button
+                    onClick={() => handleDelete(product._id)}
+                    className="px-3 py-1 font-semibold rounded-md dark:bg-violet-400 dark:text-gray-900"
+                  >
                     <span>Delete</span>
-                  </span>
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-      </div>
-
-      <div className="sm:hidden grid grid-cols-1 gap-4">
-        {products.map((product) => (
-          <div key={product._id} className="my-4 flex justify-start gap-3">
-            <img
-              className=" bg-[#f9f9fa]"
-              height={100}
-              width={80}
-              src={product?.img}
-            ></img>
-            <div>
-              <p>{product.name}</p>
-              <small>Price : {product.price}</small>
-              <div className=" flex gap-1 mt-2">
-                <FaStar className=" text-yellow-400" size={12}></FaStar>
-                <FaStar className=" text-yellow-400" size={12}></FaStar>
-                <FaStar className=" text-yellow-400" size={12}></FaStar>
-                <FaStar className=" text-yellow-400" size={12}></FaStar>
-                <small className=" text-gray-500 -mt-[2px]  mx-1">
-                  {product.ratingsCount}
-                </small>
-              </div>
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   );
