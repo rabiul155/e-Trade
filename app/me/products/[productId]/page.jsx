@@ -1,13 +1,13 @@
 "use client";
+
 import APIKit from "@/common/helpers/APIKit";
 import Loading from "@/components/Loading/Loading";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import { FaStar, FaRegHeart } from "react-icons/fa";
 
-function page() {
+function ProductDetailsPage() {
   const params = useParams();
-
   const {
     data: product = {},
     isLoading,
@@ -111,4 +111,4 @@ function page() {
   );
 }
 
-export default page;
+export default ProductDetailsPage;

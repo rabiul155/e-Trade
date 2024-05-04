@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-function Page() {
+function Me() {
   const router = useRouter();
   useEffect(() => {
     router.push("me/products");
@@ -10,4 +10,4 @@ function Page() {
   return <></>;
 }
 
-export default Page;
+export default Me;

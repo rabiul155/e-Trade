@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 
 import { useSelector } from "react-redux";
 
-function page() {
+function ProductPage() {
   const auth = useSelector((state) => state.auth);
   const { user } = auth;
   const {
@@ -94,7 +94,7 @@ function page() {
             <li className="my-4">
               {" "}
               <p>
-                Kid's Clothes <span className=" float-right">110</span>
+                Kids Clothes <span className=" float-right">110</span>
               </p>
             </li>
             <li className="my-4">
@@ -218,4 +218,4 @@ function page() {
   );
 }
 
-export default page;
+export default ProductPage;

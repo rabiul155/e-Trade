@@ -16,7 +16,7 @@ const formSchema = Yup.object({
     .min(6, "password should be at least 6 character"),
 });
 
-function page() {
+function LoginPage() {
   const router = useRouter();
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
@@ -135,4 +135,4 @@ function page() {
   );
 }
 
-export default page;
+export default LoginPage;

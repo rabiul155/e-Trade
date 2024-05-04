@@ -3,7 +3,7 @@ import Comments from "@/components/Comments/Comments";
 import Contuct from "@/components/Contuct/Contuct";
 import TopSell from "@/components/TopSell/TopSell";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <div>
       <Banner></Banner>

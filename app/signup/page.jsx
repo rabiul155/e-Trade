@@ -26,7 +26,7 @@ const initialValues = {
   password: "",
 };
 
-function page() {
+function SignUpPage() {
   const router = useRouter();
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
@@ -210,7 +210,9 @@ function page() {
                 Select District
               </option>
               {divisionDistricts[values.division]?.map((district) => (
-                <option value={district}>{district}</option>
+                <option key={district} value={district}>
+                  {district}
+                </option>
               ))}
             </select>
             {errors.district && touched.district ? (
@@ -269,4 +271,4 @@ function page() {
   );
 }
 
-export default page;
+export default SignUpPage;

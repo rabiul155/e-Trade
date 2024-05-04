@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 import { FaStar } from "react-icons/fa";
 import { useSelector } from "react-redux";
 
-const Cart = () => {
+function CartPage() {
   const auth = useSelector((state) => state.auth);
   const { user } = auth;
 
@@ -106,6 +106,6 @@ const Cart = () => {
       ))}
     </div>
   );
-};
+}
 
-export default Cart;
+export default CartPage;
