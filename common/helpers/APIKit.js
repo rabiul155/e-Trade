@@ -15,6 +15,7 @@ const APIKit = {
 
   product: {
     getProductsList: () => client.get("/products"),
+    createProduct: (data) => client.post("/products", data),
     getSingleProduct: (_id) => client.get(`/products/${_id}`),
     deleteProduct: (id) => client.delete(`/products/${id}`),
   },
