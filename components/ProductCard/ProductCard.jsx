@@ -10,35 +10,33 @@ function ProductCard({ product, addToCart }) {
   return (
     <div className="group">
       <div className="rounded bg-[#f9f9fa] mx-auto ">
-        <div className="relative hidden h-64">
+        <div className="relative overflow-hidden w-full">
           <img
             src={img}
-            className="rounded-t mx-auto h-44 w-52 object-cover object-center"
+            className="rounded-t h-64 w-full object-cover object-center"
           ></img>
-          <table className="absolute cursor-pointer bottom-10 ">
-            <tbody>
-              <tr className="border border-collapse flex bg-white">
-                <td className="h-9 w-11 border border-collapse hover:bg-gray-900 hover:text-white duration-300 flex items-center justify-center">
-                  <Link href={`/products/${_id}`}>
-                    <FaRegEye></FaRegEye>
-                  </Link>
-                </td>
-                <td
-                  onClick={() => addToCart(product)}
-                  className="h-9 w-11 border
-                         border-collapse hover:bg-gray-900 hover:text-white duration-300 flex items-center justify-center"
-                >
-                  <FaCartArrowDown></FaCartArrowDown>
-                </td>
-                <td
-                  className="h-9 w-11 border
-                         border-collapse hover:bg-gray-900 hover:text-white duration-300 flex items-center justify-center"
-                >
-                  <FaRegHeart></FaRegHeart>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="absolute -bottom-10 group-hover:bottom-3 transition-all duration-500 left-0 right-0 flex justify-center">
+            <table className="cursor-pointer">
+              <tbody>
+                <tr className="border border-collapse flex bg-white">
+                  <td className="h-9 w-11 border border-collapse hover:bg-gray-900 hover:text-white duration-300 flex items-center justify-center">
+                    <Link href={`/products/${_id}`}>
+                      <FaRegEye></FaRegEye>
+                    </Link>
+                  </td>
+                  <td
+                    onClick={() => addToCart(product)}
+                    className="h-9 w-11 border border-collapse hover:bg-gray-900 hover:text-white duration-300 flex items-center justify-center"
+                  >
+                    <FaCartArrowDown></FaCartArrowDown>
+                  </td>
+                  <td className="h-9 w-11 border border-collapse hover:bg-gray-900 hover:text-white duration-300 flex items-center justify-center">
+                    <FaRegHeart></FaRegHeart>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <div className=" px-2 py-6">
           <h3 className="font-bold text-[14px] ">{name}</h3>
