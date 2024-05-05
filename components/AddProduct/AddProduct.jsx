@@ -38,7 +38,7 @@ function AddProduct() {
 
         const handleSuccess = (response) => {
           console.log(response.data.data);
-          router.push("/me/products");
+          router.push("/products");
         };
         const handleError = (error) => {
           console.log(error);

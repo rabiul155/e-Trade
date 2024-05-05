@@ -30,7 +30,7 @@ function Navbar() {
         <Link
           onClick={() => setOpen(false)}
           className="hover:bg-[#333333] font-semibold hover:text-white  px-4 py-2 rounded-2xl duration-150"
-          href="/me/products"
+          href="/products"
         >
           Products
         </Link>
@@ -39,7 +39,7 @@ function Navbar() {
         <Link
           onClick={() => setOpen(false)}
           className="hover:bg-[#333333] font-semibold hover:text-white  px-4 py-2 rounded-2xl duration-150"
-          href="/me/cart"
+          href="/cart"
         >
           Cart
         </Link>
@@ -48,7 +48,7 @@ function Navbar() {
         <Link
           onClick={() => setOpen(false)}
           className="hover:bg-[#333333] font-semibold hover:text-white px-4 py-2 rounded-2xl duration-150"
-          href="/me/help"
+          href="/help"
         >
           Help
         </Link>
@@ -76,8 +76,6 @@ function Navbar() {
       user: {},
     };
     dispatch(setUser(payload));
-
-    router.push("/login");
   };
 
   return (

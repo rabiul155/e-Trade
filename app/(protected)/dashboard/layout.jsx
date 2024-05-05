@@ -1,7 +1,7 @@
 "use client";
 import { dashboardContext } from "@/context/Context";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 
 function DashboardLayout({ children }) {
   const { toggle, setToggle } = useContext(dashboardContext);

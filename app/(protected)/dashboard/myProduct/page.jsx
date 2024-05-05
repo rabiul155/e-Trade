@@ -1,5 +1,4 @@
 "use client";
-import { FaStar } from "react-icons/fa";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "@/components/Loading/Loading";
 import APIKit from "@/common/helpers/APIKit";

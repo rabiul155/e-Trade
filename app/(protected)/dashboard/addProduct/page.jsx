@@ -1,9 +1,7 @@
 "use client";
-
 import AddProduct from "@/components/AddProduct/AddProduct";
-import React from "react";
 
-function DashboardPage() {
+function AddProductPage() {
   return (
     <div>
       <AddProduct></AddProduct>
@@ -11,4 +9,4 @@ function DashboardPage() {
   );
 }
 
-export default DashboardPage;
+export default AddProductPage;

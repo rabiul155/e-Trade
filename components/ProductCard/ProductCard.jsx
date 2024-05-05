@@ -8,15 +8,18 @@ function ProductCard({ product, addToCart }) {
   const { _id, img, name, price, ratingsCount } = product;
 
   return (
-    <div className={styles.mainContent}>
+    <div className="group">
       <div className="rounded bg-[#f9f9fa] mx-auto ">
-        <div className={styles.cardContent}>
-          <img src={img} className="rounded-t mx-auto"></img>
-          <table className={styles.tableContent}>
+        <div className="relative hidden h-64">
+          <img
+            src={img}
+            className="rounded-t mx-auto h-44 w-52 object-cover object-center"
+          ></img>
+          <table className="absolute cursor-pointer bottom-10 ">
             <tbody>
-              <tr className="border border-collapse flex bg-white ">
+              <tr className="border border-collapse flex bg-white">
                 <td className="h-9 w-11 border border-collapse hover:bg-gray-900 hover:text-white duration-300 flex items-center justify-center">
-                  <Link href={`me/products/${_id}`}>
+                  <Link href={`/products/${_id}`}>
                     <FaRegEye></FaRegEye>
                   </Link>
                 </td>

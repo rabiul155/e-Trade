@@ -4,9 +4,10 @@ import { FaStar } from "react-icons/fa";
 import ProductCard from "@/components/ProductCard/ProductCard";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
-import p1 from "../../../public/Images/p1.jpg";
-import p2 from "../../../public/Images/p2.jpg";
-import p3 from "../../../public/Images/p3.jpg";
+import p1 from "../../public/Images/p1.jpg";
+import p2 from "../../public/Images/p2.jpg";
+import p3 from "../../public/Images/p3.jpg";
+
 import Loading from "@/components/Loading/Loading";
 import APIKit from "@/common/helpers/APIKit";
 import toast from "react-hot-toast";
@@ -31,30 +32,33 @@ function ProductPage() {
   });
 
   const addToCart = (product) => {
-    console.log(product);
-    const payload = {
-      customer: user.name,
-      email: user.email,
-      product: product,
-    };
-    const onSuccess = (data) => {
-      console.log(data);
-    };
-    const onFailure = (error) => {
-      console.log(error);
-      throw error;
-    };
+    if (user.email) {
+      const payload = {
+        customer: user.name,
+        email: user.email,
+        product: product,
+      };
+      const onSuccess = (data) => {
+        console.log(data);
+      };
+      const onFailure = (error) => {
+        console.log(error);
+        throw error;
+      };
 
-    const promise = APIKit.cart
-      .addToCart(payload)
-      .then(onSuccess)
-      .catch(onFailure)
-      .finally();
-    return toast.promise(promise, {
-      loading: "Loading...",
-      success: "Product added successfully!",
-      error: "Something went wrong...",
-    });
+      const promise = APIKit.cart
+        .addToCart(payload)
+        .then(onSuccess)
+        .catch(onFailure)
+        .finally();
+      return toast.promise(promise, {
+        loading: "Loading...",
+        success: "Product added successfully!",
+        error: "Something went wrong...",
+      });
+    } else {
+      toast("Please log in first");
+    }
   };
 
   if (isLoading) return <Loading></Loading>;

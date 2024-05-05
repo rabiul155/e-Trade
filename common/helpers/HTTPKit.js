@@ -24,7 +24,7 @@ client.interceptors.response.use(
       error.response.data.message === "token_not_valid"
     ) {
       console.log("token expired, generating new token...");
-      const getRefreshToken = () => {
+      const getRefreshToken = async () => {
         const refreshToken = localStorage.getItem(REFRESH_TOKEN);
         if (refreshToken) {
           const handleSuccess = (response) => {
@@ -108,7 +108,7 @@ const isReady = () => {
   }
 };
 
-export const setTokenAndRedirect = (
+export const setTokenAndRedirect = async (
   accessToken,
   refreshToken,
   redirect = () => {}

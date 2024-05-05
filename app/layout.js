@@ -9,6 +9,7 @@ import Context from "@/context/Context";
 import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import store from "@/redux/store/store";
+import AuthGuardHOC from "@/components/AuthGuard/AuthGuardHOC";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,9 +38,11 @@ export default function RootLayout({ children }) {
                   },
                 }}
               />
-              <Navbar></Navbar>
-              <div className="min-h-screen">{children}</div>
-              <Footer></Footer>
+              <AuthGuardHOC>
+                <Navbar></Navbar>
+                <div className="min-h-screen">{children}</div>
+                <Footer></Footer>
+              </AuthGuardHOC>
             </QueryClientProvider>
           </Provider>
         </Context>
