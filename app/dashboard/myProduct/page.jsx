@@ -34,8 +34,9 @@ function MyProductPage() {
           refetch();
         }
       };
-      const onError = (data) => {
-        console.log(data);
+      const onError = (error) => {
+        console.log(error);
+        throw error;
       };
       const promise = APIKit.product
         .deleteProduct(id)
@@ -85,7 +86,7 @@ function MyProductPage() {
                     onClick={() => handleDelete(product._id)}
                     className="px-3 py-1 font-semibold rounded-md dark:bg-violet-400 dark:text-gray-900"
                   >
-                    <span>Delete</span>
+                    Delete
                   </button>
                 </td>
               </tr>
