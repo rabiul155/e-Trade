@@ -55,7 +55,7 @@ function MyProductPage() {
 
   return (
     <div className=" m-2 lg:m-0">
-      <div className="hidden sm:block h-screen overflow-y-scroll">
+      <div className=" h-screen overflow-y-scroll">
         <table className="min-w-full text-xs">
           <thead className="bg-gray-100">
             <tr className="border-b border-gray-300 text-left">

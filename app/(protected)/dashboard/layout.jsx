@@ -5,6 +5,7 @@ import { useContext } from "react";
 
 function DashboardLayout({ children }) {
   const { toggle, setToggle } = useContext(dashboardContext);
+  console.log(toggle);
 
   return (
     <div>
@@ -12,7 +13,6 @@ function DashboardLayout({ children }) {
         <div className="hidden md:block ">
           <ul className=" min-h-screen p-2 bg-slate-200 ">
             <Link href="/dashboard/addProduct">
-              {" "}
               <li className="hover:bg-gray-900 hover:text-white duration-300 rounded-md px-4  py-2 cursor-pointer text-gray-700">
                 Add Product
               </li>
@@ -31,11 +31,11 @@ function DashboardLayout({ children }) {
         </div>
 
         <div
-          className={`absolute z-10 duration-500 block md:hidden ${
+          className={`absolute w-[240px] h-screen z-10 duration-500 block md:hidden ${
             toggle ? "left-0" : "-left-60"
           }`}
         >
-          <ul className="w-[240px] min-h-screen p-2 bg-slate-200 ">
+          <ul className="p-2 h-screen bg-slate-200 ">
             <Link onClick={() => setToggle(false)} href="/dashboard/addProduct">
               {" "}
               <li className="hover:bg-gray-900 hover:text-white duration-300 rounded-md px-4  py-2 cursor-pointer text-gray-700">

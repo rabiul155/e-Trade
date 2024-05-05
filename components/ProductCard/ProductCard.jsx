@@ -1,7 +1,4 @@
 import { FaStar, FaCartArrowDown, FaRegEye, FaRegHeart } from "react-icons/fa";
-
-import styles from "./ProductCard.module.css";
-
 import Link from "next/link";
 
 function ProductCard({ product, addToCart }) {
@@ -15,7 +12,7 @@ function ProductCard({ product, addToCart }) {
             src={img}
             className="rounded-t h-64 w-full object-cover object-center"
           ></img>
-          <div className="absolute -bottom-10 group-hover:bottom-3 transition-all duration-500 left-0 right-0 flex justify-center">
+          <div className="absolute bottom-3 lg:-bottom-10 lg:group-hover:bottom-3 transition-all duration-500 left-0 right-0 flex justify-center">
             <table className="cursor-pointer">
               <tbody>
                 <tr className="border border-collapse flex bg-white">
