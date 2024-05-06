@@ -5,16 +5,14 @@ import { setTokenAndRedirect } from "@/common/helpers/HTTPKit";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/common/helpers/KeyChain";
 import { setUser } from "@/redux/authSlice/authSlice";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import Loading from "../Loading/Loading";
+import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 
 function AuthGuardHOC({ children }) {
   const accessToken = localStorage.getItem(ACCESS_TOKEN);
   const refreshToken = localStorage.getItem(REFRESH_TOKEN);
 
-  const auth = useSelector((state) => state.auth);
-  const { loading } = auth;
+  console.log({ accessToken, refreshToken });
 
   const dispatch = useDispatch();
 

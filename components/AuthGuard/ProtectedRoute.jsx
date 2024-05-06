@@ -8,17 +8,12 @@ import { useRouter } from "next/navigation";
 function ProtectedRoute({ children }) {
   const auth = useSelector((state) => state.auth);
   const { loading, user } = auth;
-  console.log("hello from protected route");
 
   const router = useRouter();
 
   if (loading) return <Loading></Loading>;
 
-  if (!user.email) {
-    router.push("/login");
-  }
-
-  return user.email ? children : null;
+  return user.email ? children : router.push("/login");
 }
 
 export default ProtectedRoute;

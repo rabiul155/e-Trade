@@ -35,34 +35,22 @@ function Navbar() {
           Help
         </li>
       </Link>
-
-      <Link onClick={() => setShow(!show)} href="/dashboard">
-        <li className="hover:bg-gray-900 flex gap-2 items-center hover:text-white duration-300 rounded-2xl px-4  py-2 cursor-pointer ">
-          <span>Dashboard</span>
-          <span
-            className={`transform transition-all duration-150 ${
-              show ? "rotate-90" : "rotate-0"
-            }`}
-          >
-            <MdKeyboardArrowRight />
-          </span>
-        </li>
-      </Link>
     </>
   );
 
   const dashboardMenu = (
     <>
-      <Link onClick={() => setOpen(false)} href="/dashboard/addProduct">
-        <li className="hover:bg-gray-900 hover:text-white duration-300 rounded-2xl px-4  py-2 cursor-pointer">
-          Add Product
-        </li>
-      </Link>
       <Link onClick={() => setOpen(false)} href="/dashboard/myProduct">
         <li className="hover:bg-gray-900 hover:text-white duration-300 rounded-2xl px-4  py-2  cursor-pointer">
           My Product
         </li>
       </Link>
+      <Link onClick={() => setOpen(false)} href="/dashboard/addProduct">
+        <li className="hover:bg-gray-900 hover:text-white duration-300 rounded-2xl px-4  py-2 cursor-pointer">
+          Add Product
+        </li>
+      </Link>
+
       <Link onClick={() => setOpen(false)} href="/dashboard/progress">
         <li className="hover:bg-gray-900 hover:text-white duration-300 rounded-2xl px-4  py-2  cursor-pointer">
           Progress
@@ -76,7 +64,7 @@ function Navbar() {
     localStorage.removeItem(REFRESH_TOKEN);
     const payload = {
       isSuccess: false,
-      loading: true,
+      loading: false,
       isError: false,
       authError: "",
       user: {},
@@ -93,7 +81,21 @@ function Navbar() {
               <Image src={logo} alt="logo"></Image>
             </Link>
 
-            <ul className="hidden md:flex gap-5 items-center ">{menuItems}</ul>
+            <ul className="hidden md:flex gap-5 items-center ">
+              {menuItems}
+              <Link href="/dashboard/myProduct">
+                <li className="hover:bg-gray-900 flex gap-2 items-center hover:text-white duration-300 rounded-2xl px-4  py-2 cursor-pointer ">
+                  <span>Dashboard</span>
+                  <span
+                    className={`transform transition-all duration-150 ${
+                      show ? "rotate-90" : "rotate-0"
+                    }`}
+                  >
+                    <MdKeyboardArrowRight />
+                  </span>
+                </li>
+              </Link>
+            </ul>
           </div>
           <div className="flex items-center">
             {user?.email ? (
@@ -137,7 +139,21 @@ function Navbar() {
         }`}
       >
         <div className="relative h-screen px-3 py-12 bg-slate-200">
-          <ul className="w-[90%]">{menuItems}</ul>
+          <ul className="w-[90%]">
+            {menuItems}
+            <div onClick={() => setShow(!show)}>
+              <li className="hover:bg-gray-900 flex gap-2 items-center hover:text-white duration-300 rounded-2xl px-4  py-2 cursor-pointer ">
+                <span>Dashboard</span>
+                <span
+                  className={`transform transition-all duration-150 ${
+                    show ? "rotate-90" : "rotate-0"
+                  }`}
+                >
+                  <MdKeyboardArrowRight />
+                </span>
+              </li>
+            </div>
+          </ul>
 
           <ul
             className={`absolute w-[80%] duration-500 top-52 ${

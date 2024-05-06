@@ -2,7 +2,7 @@ import APIKit from "@/common/helpers/APIKit";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  loading: true,
+  loading: false,
   isSuccess: false,
   isError: false,
   authError: "",
