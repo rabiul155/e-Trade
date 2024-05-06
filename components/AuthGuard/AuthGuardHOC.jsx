@@ -9,11 +9,6 @@ import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 
 function AuthGuardHOC({ children }) {
-  const accessToken = localStorage.getItem(ACCESS_TOKEN);
-  const refreshToken = localStorage.getItem(REFRESH_TOKEN);
-
-  console.log({ accessToken, refreshToken });
-
   const dispatch = useDispatch();
 
   const getUserInfo = async () => {
@@ -53,25 +48,29 @@ function AuthGuardHOC({ children }) {
   };
 
   useEffect(() => {
-    if (accessToken && refreshToken) {
-      setTokenAndRedirect(accessToken, refreshToken)
-        .then(getUserInfo)
+    if (typeof window !== "undefined") {
+      const accessToken = localStorage.getItem(ACCESS_TOKEN);
+      const refreshToken = localStorage.getItem(REFRESH_TOKEN);
+      if (accessToken && refreshToken) {
+        setTokenAndRedirect(accessToken, refreshToken)
+          .then(getUserInfo)
 
-        .catch((error) => {
-          console.log(error);
-          toast.error("something went wrong please reload");
-        });
-    } else {
-      const payload = {
-        isSuccess: false,
-        loading: false,
-        isError: false,
-        authError: "",
-        user: {},
-      };
-      dispatch(setUser(payload));
+          .catch((error) => {
+            console.log(error);
+            toast.error("something went wrong please reload");
+          });
+      } else {
+        const payload = {
+          isSuccess: false,
+          loading: false,
+          isError: false,
+          authError: "",
+          user: {},
+        };
+        dispatch(setUser(payload));
+      }
     }
-  }, [accessToken, refreshToken]);
+  }, []);
 
   return children;
 }
