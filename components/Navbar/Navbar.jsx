@@ -1,85 +1,43 @@
 "use client";
 
 import { HiMenu } from "react-icons/hi";
-
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import logo from "../../public/Images/logo.png";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { dashboardContext } from "@/context/Context";
 import { useDispatch, useSelector } from "react-redux";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/common/helpers/KeyChain";
-import { useRouter } from "next/navigation";
 import { setUser } from "@/redux/authSlice/authSlice";
 
 function Navbar() {
-  const { toggle, setToggle } = useContext(dashboardContext);
-
   const auth = useSelector((state) => state.auth);
   const { user } = auth;
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
 
-  console.log(open);
-
-  const dashboardMenu = (
-    <ul className=" ">
-      <Link onClick={() => setOpen(false)} href="/dashboard/addProduct">
-        <li className="hover:bg-gray-900 hover:text-white duration-300 rounded-md px-4  py-2 cursor-pointer text-gray-700">
-          Add Product
-        </li>
-      </Link>
-      <Link onClick={() => setOpen(false)} href="/dashboard/myProduct">
-        <li className="hover:bg-gray-900 hover:text-white duration-300 rounded-md px-4  py-2  cursor-pointer text-gray-700">
-          My Product
-        </li>
-      </Link>
-      <Link onClick={() => setOpen(false)} href="/dashboard/progress">
-        <li className="hover:bg-gray-900 hover:text-white duration-300 rounded-md px-4  py-2  cursor-pointer text-gray-700">
-          Progress
-        </li>
-      </Link>
-    </ul>
-  );
-
   const menuItems = (
     <>
-      <li className="mr-5 flex items-center">
-        <Link
-          onClick={() => setOpen(false)}
-          className="hover:bg-[#333333] font-medium hover:text-white  px-4 py-2 rounded-2xl duration-150"
-          href="/products"
-        >
+      <Link onClick={() => setOpen(false)} href="/products">
+        <li className="hover:bg-gray-900 hover:text-white duration-300 rounded-2xl px-4  py-2 cursor-pointer ">
           Products
-        </Link>
-      </li>
-      <li className="mr-5 flex items-center">
-        <Link
-          onClick={() => setOpen(false)}
-          className="hover:bg-[#333333] font-medium hover:text-white  px-4 py-2 rounded-2xl duration-150"
-          href="/cart"
-        >
+        </li>
+      </Link>
+      <Link onClick={() => setOpen(false)} href="/cart">
+        <li className="hover:bg-gray-900 hover:text-white duration-300 rounded-2xl px-4  py-2 cursor-pointer">
           Cart
-        </Link>
-      </li>
-      <li className="mr-5 flex items-center">
-        <Link
-          onClick={() => setOpen(false)}
-          className="hover:bg-[#333333] font-medium hover:text-white px-4 py-2 rounded-2xl duration-150"
-          href="/help"
-        >
+        </li>
+      </Link>
+      <Link onClick={() => setOpen(false)} href="/help">
+        <li className="hover:bg-gray-900 hover:text-white duration-300 rounded-2xl px-4  py-2 cursor-pointer ">
           Help
-        </Link>
-      </li>
-      <li className="mr-5 flex items-center">
-        <Link
-          onClick={() => setShow(!show)}
-          className="hover:bg-[#333333] flex gap-2 items-center font-medium hover:text-white px-4 py-2 rounded-2xl duration-150"
-          href="/dashboard"
-        >
+        </li>
+      </Link>
+
+      <Link onClick={() => setShow(!show)} href="/dashboard">
+        <li className="hover:bg-gray-900 flex gap-2 items-center hover:text-white duration-300 rounded-2xl px-4  py-2 cursor-pointer ">
           <span>Dashboard</span>
           <span
             className={`transform transition-all duration-150 ${
@@ -88,8 +46,28 @@ function Navbar() {
           >
             <MdKeyboardArrowRight />
           </span>
-        </Link>
-      </li>
+        </li>
+      </Link>
+    </>
+  );
+
+  const dashboardMenu = (
+    <>
+      <Link onClick={() => setOpen(false)} href="/dashboard/addProduct">
+        <li className="hover:bg-gray-900 hover:text-white duration-300 rounded-2xl px-4  py-2 cursor-pointer">
+          Add Product
+        </li>
+      </Link>
+      <Link onClick={() => setOpen(false)} href="/dashboard/myProduct">
+        <li className="hover:bg-gray-900 hover:text-white duration-300 rounded-2xl px-4  py-2  cursor-pointer">
+          My Product
+        </li>
+      </Link>
+      <Link onClick={() => setOpen(false)} href="/dashboard/progress">
+        <li className="hover:bg-gray-900 hover:text-white duration-300 rounded-2xl px-4  py-2  cursor-pointer">
+          Progress
+        </li>
+      </Link>
     </>
   );
 
@@ -112,12 +90,10 @@ function Navbar() {
         <div className="  flex justify-between items-center px-2 lg:px-4 text-gray-800 h-[70px]">
           <div className="flex items-center">
             <Link className="text-[22px] font-medium mr-0 lg:mr-6" href="/">
-              <Image src={logo}></Image>
+              <Image src={logo} alt="logo"></Image>
             </Link>
 
-            <ul className="lg:flex hidden items-center text-[16px]">
-              {menuItems}
-            </ul>
+            <ul className="hidden md:flex gap-5 items-center ">{menuItems}</ul>
           </div>
           <div className="flex items-center">
             {user?.email ? (
@@ -156,14 +132,20 @@ function Navbar() {
         </div>
       </div>
       <div
-        className={`absolute top-0 w-[320px] h-screen z-20 duration-500 block md:hidden ${
-          open ? "left-0" : "-left-70"
+        className={`fixed top-0 w-[320px] h-screen z-20 transition-all duration-500 block md:hidden ${
+          open ? "left-0" : "-left-96"
         }`}
       >
-        <div className="relative h-screen">
-          <ul className=" bg-slate-200 h-screen px-2 py-4">{menuItems}</ul>
+        <div className="relative h-screen px-3 py-12 bg-slate-200">
+          <ul className="w-[90%]">{menuItems}</ul>
 
-          <div>{dashboardMenu}</div>
+          <ul
+            className={`absolute w-[80%] duration-500 top-52 ${
+              show ? "left-8" : "-left-96"
+            }`}
+          >
+            {dashboardMenu}
+          </ul>
 
           <button
             onClick={() => setOpen(false)}

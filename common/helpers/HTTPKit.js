@@ -21,7 +21,7 @@ client.interceptors.response.use(
     console.log({ apiError: error });
     if (
       error.response.status === 401 &&
-      error.response.data.message === "token_not_valid"
+      error.response.data.message === "token_not_valid_or_token_expired"
     ) {
       console.log("token expired, generating new token...");
       const getRefreshToken = async () => {

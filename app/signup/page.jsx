@@ -172,7 +172,7 @@ function SignUpPage() {
 
         <div className="mt-4 grid grid-cols-2 gap-4 ">
           <div>
-            <label for="division">Division</label>
+            <label htmlFor="division">Division</label>
             <select
               name="division"
               onBlur={handleBlur}
@@ -198,7 +198,7 @@ function SignUpPage() {
           </div>
 
           <div>
-            <label for="district">District</label>
+            <label htmlFor="district">District</label>
             <select
               name="district"
               onChange={handleChange}

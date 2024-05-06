@@ -183,7 +183,7 @@ function AddProduct() {
       </div>
 
       <div className="lg:col-span-2">
-        <label for="details" className="text-sm">
+        <label htmlFor="details" className="text-sm">
           Product Details
         </label>
         <textarea

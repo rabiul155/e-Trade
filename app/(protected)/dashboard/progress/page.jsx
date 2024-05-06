@@ -1,7 +1,7 @@
 import React from "react";
 
-const help = () => {
+function ProgressPage() {
   return <div>This page under construction</div>;
-};
+}
 
-export default help;
+export default ProgressPage;
