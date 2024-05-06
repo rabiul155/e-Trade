@@ -3,10 +3,12 @@ import APIKit from "@/common/helpers/APIKit";
 import { setTokenAndRedirect } from "@/common/helpers/HTTPKit";
 import Button from "@/components/Button/Button";
 import InputField from "@/components/InputField/InputField";
+import { setUser } from "@/redux/authSlice/authSlice";
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import * as Yup from "yup";
 
 const formSchema = Yup.object({
@@ -18,6 +20,7 @@ const formSchema = Yup.object({
 
 function LoginPage() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } =
     useFormik({
       initialValues: {
@@ -27,11 +30,17 @@ function LoginPage() {
       validationSchema: formSchema,
 
       onSubmit: (values, action) => {
-        const payload = values;
-
         const onSuccess = (response) => {
           const accessToken = response.data.accessToken;
           const refreshToken = response.data.refreshToken;
+          payload = {
+            isSuccess: true,
+            loading: false,
+            isError: false,
+            authError: "",
+            user: response.data.data.user,
+          };
+          dispatch(setUser(payload));
 
           setTokenAndRedirect(accessToken, refreshToken, () => {
             router.push("/");
@@ -44,7 +53,7 @@ function LoginPage() {
         };
 
         const promise = APIKit.auth
-          .login(payload)
+          .login(values)
           .then(onSuccess)
           .catch(onError);
 

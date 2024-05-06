@@ -34,18 +34,24 @@ function SignUpPage() {
       validationSchema: formSchema,
 
       onSubmit: (values, action) => {
-        const payload = values;
-        const onSuccess = (result) => {
-          console.log(result);
+        const onSuccess = (response) => {
           action.resetForm();
-          router.push("/login");
+          payload = {
+            isSuccess: true,
+            loading: false,
+            isError: false,
+            authError: "",
+            user: response.data.data.user,
+          };
+          dispatch(setUser(payload));
+          router.push("/");
         };
         const onError = (error) => {
           console.log(error);
         };
 
         const promise = APIKit.auth
-          .register(payload)
+          .register(values)
           .then(onSuccess)
           .catch(onError)
           .finally();
@@ -220,23 +226,6 @@ function SignUpPage() {
             ) : null}
           </div>
         </div>
-
-        {/* <div className="relative mt-4">
-          <label className="block text-gray-700">Photo</label>
-          <input
-            type="file"
-            name="file"
-            onBlur={handleBlur}
-            onChange={handleChange}
-            className=" w-full mt-1 py-2 text-[14px] text-gray-900 border rounded-lg cursor-pointer bg-gray-200 focus:border-blue-500 focus:bg-white focus:outline-none "
-          />
-          <div className="absolute top-7 w-[94px] bg-gray-800 pl-2  text-white py-[11px] text-sm border rounded-l-lg">
-            Choose File
-          </div>
-          {errors.file && touched.file ? (
-            <p className=" text-sm text-red-600">{errors.file}</p>
-          ) : null}
-        </div> */}
 
         <div className="mt-4">
           <InputField
