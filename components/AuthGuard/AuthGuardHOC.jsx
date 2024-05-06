@@ -48,27 +48,25 @@ function AuthGuardHOC({ children }) {
   };
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const accessToken = localStorage.getItem(ACCESS_TOKEN);
-      const refreshToken = localStorage.getItem(REFRESH_TOKEN);
-      if (accessToken && refreshToken) {
-        setTokenAndRedirect(accessToken, refreshToken)
-          .then(getUserInfo)
+    const accessToken = localStorage.getItem(ACCESS_TOKEN);
+    const refreshToken = localStorage.getItem(REFRESH_TOKEN);
+    if (accessToken && refreshToken) {
+      setTokenAndRedirect(accessToken, refreshToken)
+        .then(getUserInfo)
 
-          .catch((error) => {
-            console.log(error);
-            toast.error("something went wrong please reload");
-          });
-      } else {
-        const payload = {
-          isSuccess: false,
-          loading: false,
-          isError: false,
-          authError: "",
-          user: {},
-        };
-        dispatch(setUser(payload));
-      }
+        .catch((error) => {
+          console.log(error);
+          toast.error("something went wrong please reload");
+        });
+    } else {
+      const payload = {
+        isSuccess: false,
+        loading: false,
+        isError: false,
+        authError: "",
+        user: {},
+      };
+      dispatch(setUser(payload));
     }
   }, []);
 
