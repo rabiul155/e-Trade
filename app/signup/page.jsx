@@ -48,6 +48,7 @@ function SignUpPage() {
         };
         const onError = (error) => {
           console.log(error);
+          throw error;
         };
 
         const promise = APIKit.auth

@@ -56,10 +56,7 @@ function LoginPage() {
           .login(values)
           .then(onSuccess)
           .catch(onError);
-
-        console.log(promise);
-
-        toast.promise(promise, {
+        return toast.promise(promise, {
           loading: "Loading...",
           success: "Login successfully",
           error: "Login failed",
