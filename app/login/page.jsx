@@ -115,7 +115,7 @@ function LoginPage() {
 
         <Button
           type="submit"
-          text="SignUp"
+          text="LogIn"
           className="text-gray-100 bg-indigo-500 hover:bg-indigo-400"
         ></Button>
 
