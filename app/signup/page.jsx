@@ -36,7 +36,7 @@ function SignUpPage() {
       onSubmit: (values, action) => {
         const onSuccess = (response) => {
           action.resetForm();
-          payload = {
+          const payload = {
             isSuccess: true,
             loading: false,
             isError: false,
@@ -46,6 +46,7 @@ function SignUpPage() {
           dispatch(setUser(payload));
           router.push("/");
         };
+
         const onError = (error) => {
           console.log(error);
           throw error;
@@ -54,8 +55,8 @@ function SignUpPage() {
         const promise = APIKit.auth
           .register(values)
           .then(onSuccess)
-          .catch(onError)
-          .finally();
+          .catch(onError);
+
         return toast.promise(promise, {
           loading: "Loading...",
           success: "Registered successfully",

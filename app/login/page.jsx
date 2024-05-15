@@ -33,7 +33,7 @@ function LoginPage() {
         const onSuccess = (response) => {
           const accessToken = response.data.accessToken;
           const refreshToken = response.data.refreshToken;
-          payload = {
+          const payload = {
             isSuccess: true,
             loading: false,
             isError: false,
